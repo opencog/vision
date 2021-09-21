@@ -14,14 +14,14 @@ Nothing yet. Version 0.0.0
 ### Plan
 Cut-n-paste of email:
 
-*) Set up the conventional opencog repo boilerplate. A cut-n-paste of
+* Set up the conventional opencog repo boilerplate. A cut-n-paste of
 the makefiles in opencog/atomspace-rocks might be easiest.
 
-*) Create an atom types file & etc. a cut-n-paste of the types in
+* Create an atom types file & etc. a cut-n-paste of the types in
 opencog/spacetime might be easiest. Its mostly boilerplate ... except
 for the types themselves.
 
-*) For starters, we need to get still images into the system. I'm
+* For starters, we need to get still images into the system. I'm
 thinking that this could be an ImageNode (or IMAGE_NODE <- NODE in the
 types file).  Corresponding to this type is a C++ class that
 implements a wrapper to the suitable OpenCV analog.
@@ -34,7 +34,7 @@ https://docs.opencv.org/4.5.3/d4/da8/group__imgcodecs.html  which
 seems to be how opencv reads images. So I guess a Mat which seems to
 be the opencv handle to an image.
 
-*) Next, we need to do something with that image. So, I'm looking at
+* Next, we need to do something with that image. So, I'm looking at
 https://docs.opencv.org/4.5.3/d4/d86/group__imgproc__filter.html  and
 cv:blur() looks like a good place to start. So, we need an
 ImageBlurLink which expects .. well, for now one parameter: a
@@ -42,7 +42,7 @@ NumberNode for the size, and the image to apply it to. So a typical
 use would be (ImageBlurLink (ImageNode "/tmp/foo.jpg") (NumberNode
 20))
 
-Calling the C++ method ImageBlureLink::execute() would apply the
+Calling the C++ method ImageBlurLink::execute() would apply the
 filter to the image, and return a ... well, that's a good question.
 It could return another ImageNode holding a handle to the mutated
 image. But I don't want to place these "temporary results" into Atoms
