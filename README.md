@@ -76,6 +76,8 @@ Other required and optional `ImageFilterLink`s. These are described at https://d
   + write image to file. (Better yet: display to screen). Needed for debugging.
 So, `ImageWriteLink` and/ir `ImageDisplayLink`.
 
+  + thresholding, convert to greyscale, convert to binary b/w.
+
   + `filter2D()` to be wrapped in a `ImageFilter2DLink`.  The primary
 need for this is just to build up some simple Haar wavelets so
 that the learning algo can explore features.
