@@ -17,33 +17,25 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+#include "ImageNode.hpp"
 
 #include <mutex>
-
 #include <opencog/atoms/atom_types/NameServer.h>
+#include <opencog/atoms/vision/atom_types.h>
 #include <opencog/util/Logger.h>
-
 #include <opencv2/imgcodecs.hpp>
-
-#include "ImageNode.hpp"
 
 using namespace opencog;
 
-ImageNode::ImageNode(Type t, const std::string& filename)
-    : Node(t, filename)
-{
-    
-}
+ImageNode::ImageNode(Type t, const std::string& filename) : Node(t, filename) {}
 
-
-// ImageNode::ImageNode(const std::string& name, TimeOctomapPtr ocmap) : Node(OCTOMAP_NODE, name)
+// ImageNode::ImageNode(const std::string& name, TimeOctomapPtr ocmap) :
+// Node(OCTOMAP_NODE, name)
 // {
 //   octomapPtr = ocmap;
 // }
 
-ImageNode::~ImageNode()
-{
-}
+ImageNode::~ImageNode() {}
 
 /*Add factory.*/
 DEFINE_NODE_FACTORY(ImageNode, IMAGE_NODE)

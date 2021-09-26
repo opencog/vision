@@ -36,3 +36,5 @@
 *.vsix
 
 build/
+
+.vscode/
