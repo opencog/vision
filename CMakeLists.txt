@@ -1,5 +1,5 @@
 #
-# Master AtomSpace Vision Operators CMake file
+# Master AtomSpace Computer Vision Types CMake file
 #
 # General organization:
 # -- check for different compilers, OS'es
@@ -19,7 +19,7 @@ cmake_minimum_required(VERSION 3.0)
 # 	cmake_policy(set CMP0037 OLD)
 # endif(CMAKE_VERSION VERSION_GREATER 3.0.2)
 
-project(atomspace-visops)
+project(atomspace-vision)
 
 # default build type
 if (CMAKE_BUILD_TYPE STREQUAL "")
@@ -70,22 +70,16 @@ else (ATOMSPACE_FOUND)
 	message(FATAL_ERROR "AtomSpace missing: it is needed!")
 endif (ATOMSPACE_FOUND)
 
-# RocksDB
-find_package(RocksDB)
-if (ROCKSDB_FOUND)
-	message(STATUS "RocksDB found.")
-	# set(HAVE_ROCKSDB 1)
-else (ROCKSDB_FOUND)
-	message(STATUS "RocksDB was not found.")
-endif (ROCKSDB_FOUND)
+# OpenCV
+find_package(OpenCV REQUIRED)
 
 # ----------------------------------------------------------
 # Needed for unit tests
 
-find_package(Cxxtest)
-if (NOT CXXTEST_FOUND)
-	message(STATUS "CxxTest missing: needed for unit tests.")
-endif (NOT CXXTEST_FOUND)
+find_package(Catch2 QUIET)
+if (NOT Catch2_FOUND)
+	message(STATUS "Catch2 missing: needed for unit tests.")
+endif (NOT Catch2_FOUND)
 
 # ----------------------------------------------------------
 # Guile Python and Cython
@@ -127,38 +121,42 @@ include("${ATOMSPACE_DATA_DIR}/cmake/OpenCogGuile.cmake")
 # ==========================================================
 # Decide what to build, based on the packages found.
 
+# Basic paths
+set(SOURCES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/opencog)
+set(VISION_CMAKE_CONFIG_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/AtomSpaceVision)
+
 add_subdirectory(lib)
 add_subdirectory(opencog)
 
-if (CXXTEST_FOUND)
-	add_custom_target(tests)
-	add_subdirectory(tests EXCLUDE_FROM_ALL)
-	if (CMAKE_BUILD_TYPE STREQUAL "Coverage")
-		# doing coverage stuff while running tests if this is the Coverage build
-		add_custom_target(test
-			# TODO lcov should be found by cmake first
-			# TODO set it up so that we can pick to run coverage per test, or
-			# combined across all tests (the latter is MUCH faster). Use a define?
-			# There is coverage specific stuff in AddCxxTest.cmake now...
-			WORKING_DIRECTORY tests
-			COMMAND ${CMAKE_CTEST_COMMAND} --force-new-ctest-process --output-on-failure $(ARGS)
+# if (CXXTEST_FOUND)
+# 	add_custom_target(tests)
+# 	add_subdirectory(tests EXCLUDE_FROM_ALL)
+# 	if (CMAKE_BUILD_TYPE STREQUAL "Coverage")
+# 		# doing coverage stuff while running tests if this is the Coverage build
+# 		add_custom_target(test
+# 			# TODO lcov should be found by cmake first
+# 			# TODO set it up so that we can pick to run coverage per test, or
+# 			# combined across all tests (the latter is MUCH faster). Use a define?
+# 			# There is coverage specific stuff in AddCxxTest.cmake now...
+# 			WORKING_DIRECTORY tests
+# 			COMMAND ${CMAKE_CTEST_COMMAND} --force-new-ctest-process --output-on-failure $(ARGS)
 
-			# This script combines the coverage analysis of each test,
-			# then creates html in tests/lcov
-			# Note: this should now be run separately...
-			#COMMAND ${PROJECT_SOURCE_DIR}/scripts/combine_lcov.sh
-			COMMENT "Running tests with coverage..."
-		)
-	else (CMAKE_BUILD_TYPE STREQUAL "Coverage")
-		# if this is a build with coverage enabled then test normally
-		add_custom_target(test
-			DEPENDS tests
-			WORKING_DIRECTORY tests
-			COMMAND ${CMAKE_CTEST_COMMAND} --force-new-ctest-process --output-on-failure $(ARGS)
-			COMMENT "Running tests..."
-		)
-	endif (CMAKE_BUILD_TYPE STREQUAL "Coverage")
-endif (CXXTEST_FOUND)
+# 			# This script combines the coverage analysis of each test,
+# 			# then creates html in tests/lcov
+# 			# Note: this should now be run separately...
+# 			#COMMAND ${PROJECT_SOURCE_DIR}/scripts/combine_lcov.sh
+# 			COMMENT "Running tests with coverage..."
+# 		)
+# 	else (CMAKE_BUILD_TYPE STREQUAL "Coverage")
+# 		# if this is a build with coverage enabled then test normally
+# 		add_custom_target(test
+# 			DEPENDS tests
+# 			WORKING_DIRECTORY tests
+# 			COMMAND ${CMAKE_CTEST_COMMAND} --force-new-ctest-process --output-on-failure $(ARGS)
+# 			COMMENT "Running tests..."
+# 		)
+# 	endif (CMAKE_BUILD_TYPE STREQUAL "Coverage")
+# endif (CXXTEST_FOUND)
 
 add_custom_target(cscope
 	COMMAND find opencog examples tests -name '*.cc' -o -name '*.h' -o -name '*.cxxtest' -o -name '*.scm' > ${CMAKE_SOURCE_DIR}/cscope.files
@@ -175,8 +173,8 @@ find_package(Doxygen)
 # ===================================================================
 # Show a summary of what we found, what we will do.
 
-summary_add("AtomSpace-VisOps" "AtomSpace Vision Operators" ATOMSPACE_FOUND)
+summary_add("AtomSpace Vision" "AtomSpace Computer Vision Types" ATOMSPACE_FOUND)
 summary_add("Doxygen" "Code documentation" DOXYGEN_FOUND)
-summary_add("Unit tests" "Unit tests" CXXTEST_FOUND)
+summary_add("Unit tests" "Unit tests" Catch2_FOUND)
 
 summary_show()
