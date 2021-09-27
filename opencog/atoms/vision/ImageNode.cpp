@@ -27,13 +27,9 @@
 
 using namespace opencog;
 
-ImageNode::ImageNode(Type t, const std::string& filename) : Node(t, filename) {}
-
-// ImageNode::ImageNode(const std::string& name, TimeOctomapPtr ocmap) :
-// Node(OCTOMAP_NODE, name)
-// {
-//   octomapPtr = ocmap;
-// }
+ImageNode::ImageNode(Type t, const std::string& filename) : Node(t, filename) {
+    image = cv::imread(filename);
+}
 
 ImageNode::~ImageNode() {}
 
