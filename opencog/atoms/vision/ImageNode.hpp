@@ -30,9 +30,6 @@ namespace opencog {
 
     // ImageNode holds image data from a given path.
     // It is used to open an image via OpenCV.
-
-    using ImageNodePtr = std::shared_ptr<ImageNode<Handle>>;
-
     class ImageNode : public Node {
     public:
         ImageNode(Type t, const std::string&);

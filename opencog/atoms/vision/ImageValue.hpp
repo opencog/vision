@@ -15,7 +15,6 @@ namespace opencog {
 
     // ImageValue holds image data (OpenCV data type).
     // It is used for storing results of operating on images.
-
     class ImageValue : public FloatValue {
     private:
         Handle _item;
@@ -38,6 +37,7 @@ namespace opencog {
     };
 
     typedef std::shared_ptr<const ImageValue> ImageValuePtr;
+
     static inline ImageValuePtr ImageValueCast(const ValuePtr& a) {
         return std::dynamic_pointer_cast<const ImageValue>(a);
     }

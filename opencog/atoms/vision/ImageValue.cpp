@@ -28,7 +28,7 @@ bool ImageValue::operator==(const Value& other) const {
     if (IMAGE_VALUE != other.get_type())
         return false;
 
-    const ImageValue* fov = (const ImageValue*)&other;
+    // const ImageValue* fov = (const ImageValue*)&other;
 
     // if (_octo_node == fov->_octo_node) return true;
 
