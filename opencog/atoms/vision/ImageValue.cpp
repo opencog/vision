@@ -7,10 +7,7 @@
 
 using namespace opencog;
 
-void ImageValue::update() const {
-    // auto it = (_om->get_locations_of_atom(_item)).rbegin(); //We need the
-    // last. _value = {it->x(), it->y(), it->z()};
-}
+void ImageValue::update() const {}
 
 ImageValue::ImageValue(const HandleSeq& hseq) : FloatValue(IMAGE_VALUE) {
 

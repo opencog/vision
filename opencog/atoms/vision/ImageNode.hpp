@@ -24,36 +24,36 @@
 #include <opencv2/core/mat.hpp>
 
 namespace opencog {
-    /** \addtogroup grp_vision
-     *  @{
-     */
+/** \addtogroup grp_atomspace
+ *  @{
+ */
 
-    // ImageNode holds image data from a given path.
-    // It is used to open an image via OpenCV.
-    class ImageNode : public Node {
-    protected:
-        cv::Mat image;
+// ImageNode holds image data from a given path.
+// It is used to open an image via OpenCV.
+class ImageNode : public Node {
+protected:
+    cv::Mat image;
 
-    public:
-        ImageNode(Type t, const std::string&);
-        virtual ~ImageNode();
+public:
+    ImageNode(Type t, const std::string&);
+    virtual ~ImageNode();
 
-        static Handle factory(const Handle&);
-    };
+    static Handle factory(const Handle&);
+};
 
-    typedef std::shared_ptr<ImageNode> ImageNodePtr;
+typedef std::shared_ptr<ImageNode> ImageNodePtr;
 
-    static inline ImageNodePtr ImageNodeCast(const Handle& h) {
-        return std::dynamic_pointer_cast<ImageNode>(h);
-    }
+static inline ImageNodePtr ImageNodeCast(const Handle& h) {
+    return std::dynamic_pointer_cast<ImageNode>(h);
+}
 
-    static inline ImageNodePtr ImageNodeCast(AtomPtr a) {
-        return std::dynamic_pointer_cast<ImageNode>(a);
-    }
+static inline ImageNodePtr ImageNodeCast(AtomPtr a) {
+    return std::dynamic_pointer_cast<ImageNode>(a);
+}
 
 #define createImageNode std::make_shared<ImageNode>
 
-    /** @}*/
+/** @}*/
 } // namespace opencog
 
 #endif // _OPENCOG_IMAGE_NODE_H

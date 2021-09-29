@@ -9,44 +9,44 @@
 #include <typeindex>
 
 namespace opencog {
-    /** \addtogroup grp_vision
-     *  @{
+/** \addtogroup grp_atomspace
+ *  @{
+ */
+
+// ImageValue holds image data (OpenCV data type).
+// It is used for storing results of operating on images.
+class ImageValue : public FloatValue {
+private:
+    Handle _item;
+
+protected:
+    void update() const;
+
+public:
+    /**
+     * @param hseq a HandleSeq of size two. The first atom denotes the item
+     * to store and the second one is the the ImageNode instance to store
+     * the atom into.
      */
+    ImageValue(const HandleSeq& hseq);
+    virtual ~ImageValue() {}
 
-    // ImageValue holds image data (OpenCV data type).
-    // It is used for storing results of operating on images.
-    class ImageValue : public FloatValue {
-    private:
-        Handle _item;
+    bool operator==(const Value& other) const;
 
-    protected:
-        void update() const;
+    std::string to_string(const std::string& indent = "") const;
+};
 
-    public:
-        /**
-         * @param hseq a HandleSeq of size two. The first atom denotes the item
-         * to store and the second one is the the ImageNode instance to store
-         * the atom into.
-         */
-        ImageValue(const HandleSeq& hseq);
-        virtual ~ImageValue() {}
+typedef std::shared_ptr<const ImageValue> ImageValuePtr;
 
-        bool operator==(const Value& other) const;
+static inline ImageValuePtr ImageValueCast(const ValuePtr& a) {
+    return std::dynamic_pointer_cast<const ImageValue>(a);
+}
 
-        std::string to_string(const std::string& indent = "") const;
-    };
+template <typename... Type>
+static inline std::shared_ptr<ImageValue> createImageValue(Type&&... args) {
+    return std::make_shared<ImageValue>(std::forward<Type>(args)...);
+}
 
-    typedef std::shared_ptr<const ImageValue> ImageValuePtr;
-
-    static inline ImageValuePtr ImageValueCast(const ValuePtr& a) {
-        return std::dynamic_pointer_cast<const ImageValue>(a);
-    }
-
-    template <typename... Type>
-    static inline std::shared_ptr<ImageValue> createImageValue(Type&&... args) {
-        return std::make_shared<ImageValue>(std::forward<Type>(args)...);
-    }
-
-    /** @}*/
+/** @}*/
 } // namespace opencog
 #endif

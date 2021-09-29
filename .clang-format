@@ -13,7 +13,7 @@ IndentCaseLabels: 'false'
 IndentPPDirectives: AfterHash
 IndentWidth: '4'
 Language: Cpp
-NamespaceIndentation: All
+NamespaceIndentation: Inner
 PointerAlignment: Left
 SpaceBeforeCtorInitializerColon: 'true'
 SpaceInEmptyParentheses: 'false'
