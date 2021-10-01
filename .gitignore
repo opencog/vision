@@ -33,8 +33,11 @@
 
 .DS_Store
 
+.vscode/
 *.vsix
 
 build/
 
-.vscode/
+.cache/
+
+compile_commands.json

@@ -19,8 +19,11 @@
 
 #ifndef _OPENCOG_IMAGE_NODE_H
 #define _OPENCOG_IMAGE_NODE_H
+
 #include <memory>
+
 #include <opencog/atoms/base/Node.h>
+
 #include <opencv2/core/mat.hpp>
 
 namespace opencog {
@@ -31,17 +34,17 @@ namespace opencog {
 // ImageNode holds image data from a given path.
 // It is used to open an image via OpenCV.
 class ImageNode : public Node {
-protected:
-    cv::Mat image;
+  private:
+    cv::Mat _image;
 
-public:
+  public:
     ImageNode(Type t, const std::string&);
-    virtual ~ImageNode();
+    ~ImageNode() override = default;
 
     static Handle factory(const Handle&);
 };
 
-typedef std::shared_ptr<ImageNode> ImageNodePtr;
+using ImageNodePtr = std::shared_ptr<ImageNode>;
 
 static inline ImageNodePtr ImageNodeCast(const Handle& h) {
     return std::dynamic_pointer_cast<ImageNode>(h);
