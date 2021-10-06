@@ -1,0 +1,13 @@
+@PACKAGE_INIT@
+
+include("@CMAKE_INSTALL_PREFIX@/lib/cmake/AtomSpaceVision/AtomSpaceVisionTargets.cmake")
+
+target_link_directories(vision
+	"@CMAKE_INSTALL_PREFIX@/lib/opencog/"
+)
+
+set(AtomSpaceVision_LIBRARIES vision)
+set(AtomSpaceVision_DATA_DIR "@CMAKE_INSTALL_PREFIX@/share/opencog")
+set(AtomSpaceVision_INCLUDE_DIR "@CMAKE_INSTALL_PREFIX@/include/")
+set(AtomSpaceVision_VERSION "@SEMANTIC_VERSION@")
+set(AtomSpaceVision_FOUND 1)

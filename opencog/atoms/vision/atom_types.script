@@ -1,0 +1,8 @@
+//
+// Type definitions
+//
+
+IMAGE_NODE <- NODE
+IMAGE_BLUR_LINK <- LINK
+
+IMAGE_VALUE <- VALUE

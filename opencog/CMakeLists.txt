@@ -1,1 +1,1 @@
-add_subdirectory(visops)
+add_subdirectory(atoms)
