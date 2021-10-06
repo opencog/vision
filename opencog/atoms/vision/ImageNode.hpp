@@ -42,6 +42,8 @@ class ImageNode : public Node {
     ~ImageNode() override = default;
 
     static Handle factory(const Handle&);
+
+    const cv::Mat& image() const;
 };
 
 using ImageNodePtr = std::shared_ptr<ImageNode>;

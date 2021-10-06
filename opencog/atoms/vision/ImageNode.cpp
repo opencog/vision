@@ -32,5 +32,7 @@ using namespace opencog;
 ImageNode::ImageNode(Type t, const std::string& filename) :
     Node(t, filename), _image(cv::imread(filename)) {}
 
+const cv::Mat& ImageNode::image() const { return _image; }
+
 // Add factory.
 DEFINE_NODE_FACTORY(ImageNode, IMAGE_NODE)

@@ -21,32 +21,36 @@ namespace opencog {
  * The ImageBlurLink implements ...
  */
 class ImageBlurLink : public FunctionLink {
-protected:
+  protected:
     void init();
 
-    virtual ValuePtr
-    kons(AtomSpace*, bool, const ValuePtr&, const ValuePtr&) const;
-
-public:
-    ImageBlurLink(const Handle&, const Handle&);
+  public:
     ImageBlurLink(const HandleSeq&&, Type = IMAGE_BLUR_LINK);
+    ~ImageBlurLink() override = default;
 
     ImageBlurLink(const ImageBlurLink&) = delete;
     ImageBlurLink& operator=(const ImageBlurLink&) = delete;
 
     static Handle factory(const Handle&);
+
+    ValuePtr execute(AtomSpace*, bool = false) override;
 };
 
-typedef std::shared_ptr<ImageBlurLink> ImageBlurLinkPtr;
-static inline ImageBlurLinkPtr ImageBlurLinkCast(const Handle& h) {
-    AtomPtr a(h);
-    return std::dynamic_pointer_cast<ImageBlurLink>(a);
-}
+using ImageBlurLinkPtr = std::shared_ptr<ImageBlurLink>;
+
 static inline ImageBlurLinkPtr ImageBlurLinkCast(AtomPtr a) {
     return std::dynamic_pointer_cast<ImageBlurLink>(a);
 }
 
-#define createImageBlurLink std::make_shared<ImageBlurLink>
+static inline ImageBlurLinkPtr ImageBlurLinkCast(const Handle& h) {
+    AtomPtr a(h);
+    return std::dynamic_pointer_cast<ImageBlurLink>(a);
+}
+
+template <typename... Args>
+static constexpr auto createImageBlurLink(Args&&... args) {
+    return std::make_shared<ImageBlurLink>(args...);
+}
 
 /** @}*/
 } // namespace opencog

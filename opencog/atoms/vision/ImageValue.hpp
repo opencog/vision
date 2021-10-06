@@ -23,6 +23,7 @@ class ImageValue : public Value {
 
   protected:
     void update() const;
+    bool image_equal(const cv::Mat&, const cv::Mat&) const;
 
   public:
     /**
@@ -35,6 +36,8 @@ class ImageValue : public Value {
     bool operator==(const Value& other) const override;
 
     std::string to_string(const std::string& indent = "") const override;
+
+    const cv::Mat& image() const;
 };
 
 using ImageValuePtr = std::shared_ptr<const ImageValue>;
