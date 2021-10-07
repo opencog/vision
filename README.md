@@ -14,6 +14,12 @@ processed.
   - It returns an `ImageValue`.
 
 ### Building
+#### Dependencies
+- CMake (build dependency)
+- OpenCV (`libopencv-dev` package on Debian-derived Linux distributions)
+- AtomSpace
+
+#### Commands
 The basic command is just CMake:
 ```
 cmake -B build/ -S .
