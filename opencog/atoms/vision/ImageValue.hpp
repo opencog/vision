@@ -30,7 +30,7 @@ class ImageValue : public Value {
      * @param image an OpenCV `Mat` instance that contains the image pixel
      * array.
      */
-    ImageValue(const cv::Mat& image);
+    ImageValue(cv::Mat image);
     ~ImageValue() override = default;
 
     bool operator==(const Value& other) const override;
@@ -40,10 +40,10 @@ class ImageValue : public Value {
     const cv::Mat& image() const;
 };
 
-using ImageValuePtr = std::shared_ptr<const ImageValue>;
+using ImageValuePtr = std::shared_ptr<ImageValue>;
 
 static inline ImageValuePtr ImageValueCast(const ValuePtr& a) {
-    return std::dynamic_pointer_cast<const ImageValue>(a);
+    return std::dynamic_pointer_cast<ImageValue>(a);
 }
 
 template <typename... Args>

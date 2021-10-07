@@ -16,11 +16,13 @@ target_link_libraries(vision_types PUBLIC atomspace)
 set(VISION_SOURCES
    ${SOURCES_DIR}/atoms/vision/ImageNode.cpp
    ${SOURCES_DIR}/atoms/vision/ImageValue.cpp
+   ${SOURCES_DIR}/atoms/vision/ImageBlurLink.cpp
 )
 
 set(VISION_HEADERS
    ${SOURCES_DIR}/atoms/vision/ImageNode.hpp
    ${SOURCES_DIR}/atoms/vision/ImageValue.hpp
+   ${SOURCES_DIR}/atoms/vision/ImageBlurLink.hpp
 )
 
 add_library(

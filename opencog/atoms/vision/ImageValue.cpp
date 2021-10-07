@@ -31,8 +31,8 @@ bool ImageValue::image_equal(const cv::Mat& im_left,
     return nz == 0;
 }
 
-ImageValue::ImageValue(const cv::Mat& image) :
-    Value(IMAGE_VALUE), _image(image) {}
+ImageValue::ImageValue(cv::Mat image) :
+    Value(IMAGE_VALUE), _image(std::move(image)) {}
 
 bool ImageValue::operator==(const Value& other) const {
     if (IMAGE_VALUE != other.get_type())

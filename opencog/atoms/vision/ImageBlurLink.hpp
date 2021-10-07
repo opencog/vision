@@ -25,7 +25,7 @@ class ImageBlurLink : public FunctionLink {
     void init();
 
   public:
-    ImageBlurLink(const HandleSeq&&, Type = IMAGE_BLUR_LINK);
+    ImageBlurLink(HandleSeq, Type = IMAGE_BLUR_LINK);
     ~ImageBlurLink() override = default;
 
     ImageBlurLink(const ImageBlurLink&) = delete;
