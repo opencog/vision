@@ -10,7 +10,7 @@ add_custom_target(vision_atom_types DEPENDS atom_types.h)
 add_library(vision_types SHARED atom_types_init.cc)
 add_dependencies(vision_types vision_atom_types)
 target_include_directories(vision_types PRIVATE ${CMAKE_BINARY_DIR})
-target_link_libraries(vision_types PUBLIC atomspace)
+target_link_libraries(vision_types PUBLIC ${ATOMSPACE_LIBRARIES})
 
 # == The Library ==
 set(VISION_SOURCES
@@ -43,7 +43,7 @@ target_link_libraries(vision
    PRIVATE
       vision_types
    PUBLIC
-      atomspace
+      ${ATOMSPACE_LIBRARIES}
       ${OpenCV_LIBS}
 )
 
