@@ -1,4 +1,4 @@
-# vision
+# AtomSpace Computer Vision Types
 Atomese wrappers around a subset of OpenCV
 
 The general idea is that the `ImageValue`s will hold a handle to the
@@ -8,18 +8,18 @@ The actual images are never in the AtomSpace, only the abstract
 processing tree, and a way of hooking that tree to the image(s) to be
 processed.
 
-### Status
+## Status
 - It is possible to read an image from a file using `ImageNode`, its name corresponds to the image file location.
 - There is `ImageBlurLink` to apply `cv::blur` to images, it takes an `ImageNode` / `ImageValue` and a `NumberNode` (for kernel size).
   - It returns an `ImageValue`.
 
-### Building
-#### Dependencies
+## Building
+### Dependencies
 - CMake (build dependency)
 - OpenCV (`libopencv-dev` package on Debian-derived Linux distributions)
 - AtomSpace
 
-#### Commands
+### Commands
 The basic command is just CMake:
 ```
 cmake -B build/ -S .
@@ -29,7 +29,16 @@ Then `cmake --build build` and `cmake --install build`
 
 If you have VCPkg and / or you want to use something like clangd that requires `compile_commands.json`, there is the `configure.sh` script that runs a slightly extended version of the above command (export `VCPKG_ROOT` with the path to your VCPkg).
 
-### More plans and ideas
+## Library Usage
+### Linking
+Assuming you are using CMake as your build system the target to link with is `AtomSpace::Vision`.
+
+### Types Usage
+For Scheme users:
+- `(Image "<file-path>")` opens an image from a given file.
+- `(ImageBlur <image node/value> (Number <kernel size>))` to setup a `cv::blur` operation.
+
+## More plans and ideas
 Other required and optional `ImageFilterLink`s. These are described at https://docs.opencv.org/4.5.3/d4/d86/group__imgproc__filter.html
 
   + write image to file. (Better yet: display to screen). Needed for debugging.
