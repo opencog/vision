@@ -1,5 +1,5 @@
 # AtomSpace Computer Vision Types
-Atomese wrappers around a subset of OpenCV
+> Atomese wrappers around a subset of OpenCV
 
 The general idea is that the `ImageValue`s will hold a handle to the
 image being processed, and the `ImageBlurLink`, and other things of that
@@ -30,8 +30,9 @@ Then `cmake --build build` and `cmake --install build`
 If you have VCPkg and / or you want to use something like clangd that requires `compile_commands.json`, there is the `configure.sh` script that runs a slightly extended version of the above command (export `VCPKG_ROOT` with the path to your VCPkg).
 
 ## Library Usage
-### Linking
-Assuming you are using CMake as your build system the target to link with is `AtomSpace::Vision`.
+### CMake
+- `find_package` library name: `AtomSpaceVision`.
+- Target to link with: `AtomSpace::Vision`.
 
 ### Types Usage
 For Scheme users:

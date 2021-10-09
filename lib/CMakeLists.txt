@@ -1,4 +1,4 @@
-# CMake boilerplate mumbo-jumbo that does something.
+# CMake boilerplate for library config export.
 
 include(CMakePackageConfigHelpers)
 
