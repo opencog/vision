@@ -12,6 +12,7 @@ processed.
 - It is possible to read an image from a file using `ImageNode`, its name corresponds to the image file location.
 - There is `ImageBlurLink` to apply `cv::blur` to images, it takes an `ImageNode` / `ImageValue` and a `NumberNode` (for kernel size).
   - It returns an `ImageValue`.
+- Saving images supported with `ImageWriteLink`.
 
 ## Building
 ### Dependencies
@@ -37,13 +38,14 @@ If you have VCPkg and / or you want to use something like clangd that requires `
 ### Types Usage
 For Scheme users:
 - `(Image "<file-path>")` opens an image from a given file.
-- `(ImageBlur <image node/value> (Number <kernel size>))` to setup a `cv::blur` operation.
+- `(ImageBlur <Image or ValueOf> (Number <kernel size>))` to setup a `cv::blur` operation.
+- `(ImageWrite <Image or ValueOf> <Concept or ValueOf>)` writes an image to a given location.
 
 ## More plans and ideas
 Other required and optional `ImageFilterLink`s. These are described at https://docs.opencv.org/4.5.3/d4/d86/group__imgproc__filter.html
 
-  + write image to file. (Better yet: display to screen). Needed for debugging.
-So, `ImageWriteLink` and/ir `ImageDisplayLink`.
+  + display to screen for debugging.
+    So, `ImageDisplayLink`.
 
   + thresholding, convert to greyscale, convert to binary b/w.
 

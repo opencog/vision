@@ -38,7 +38,7 @@ ValuePtr ImageBlurLink::execute(AtomSpace* atomspace, bool silent) {
     const Handle& arg1 = getOutgoingSet().at(0);
     Type arg1_type = arg1.const_atom_ptr()->get_type();
     if (not(nameserver().isA(arg1_type, IMAGE_NODE) or
-            nameserver().isA(arg1_type, IMAGE_VALUE)))
+            nameserver().isA(arg1_type, IMAGE_VALUE))) // TODO: handle ValueOf properly
         throw InvalidParamException(TRACE_INFO,
                                     "Wrong argument type on position 1, "
                                     "expecting ImageNode or ImageValue.");

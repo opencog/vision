@@ -45,7 +45,7 @@ bool ImageValue::operator==(const Value& other) const {
 std::string ImageValue::to_string(const std::string& indent) const {
     update();
     std::string rv = indent + "(" + nameserver().getTypeName(_type);
-    rv += "<image array>\n"; // TODO: pretty printing of image arrays.
+    rv += " <image array>";
     rv += ")\n";
 
     return rv;
