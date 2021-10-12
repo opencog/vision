@@ -26,7 +26,7 @@ The basic command is just CMake:
 cmake -B build/ -S .
 ```
 
-Then `cmake --build build` and `cmake --install build`
+Then `cmake --build build` and `sudo cmake --install build`
 
 If you have VCPkg and / or you want to use something like clangd that requires `compile_commands.json`, there is the `configure.sh` script that runs a slightly extended version of the above command (export `VCPKG_ROOT` with the path to your VCPkg).
 

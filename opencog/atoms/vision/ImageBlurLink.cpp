@@ -13,6 +13,7 @@
 #include <memory>
 #include <opencog/atoms/base/ClassServer.h>
 #include <opencog/atoms/core/NumberNode.h>
+#include <opencog/atoms/flow/ValueOfLink.h>
 #include <opencog/atoms/value/Value.h>
 #include <opencv2/core/types.hpp>
 #include <opencv2/imgproc.hpp>
@@ -38,10 +39,10 @@ ValuePtr ImageBlurLink::execute(AtomSpace* atomspace, bool silent) {
     const Handle& arg1 = getOutgoingSet().at(0);
     Type arg1_type = arg1.const_atom_ptr()->get_type();
     if (not(nameserver().isA(arg1_type, IMAGE_NODE) or
-            nameserver().isA(arg1_type, IMAGE_VALUE))) // TODO: handle ValueOf properly
+            nameserver().isA(arg1_type, VALUE_OF_LINK)))
         throw InvalidParamException(TRACE_INFO,
                                     "Wrong argument type on position 1, "
-                                    "expecting ImageNode or ImageValue.");
+                                    "expecting ImageNode or ValueOf.");
 
     const Handle& arg2 = getOutgoingSet().at(1);
     Type arg2_type = arg2.const_atom_ptr()->get_type();
@@ -50,10 +51,18 @@ ValuePtr ImageBlurLink::execute(AtomSpace* atomspace, bool silent) {
             TRACE_INFO,
             "Wrong argument type on position 2, expecting NumberNode.");
 
-    auto img_np = ImageNodeCast(arg1);
-    auto img_vp = ImageValueCast(arg1);
+    ImageValuePtr img_vp = nullptr;
+    auto img_atm = ImageNodeCast(arg1);
+    auto img_vof = ValueOfLinkCast(arg1);
+    if (img_vof != nullptr)
+        img_vp = ImageValueCast(img_vof->execute(atomspace, silent));
+
+    if (img_atm == nullptr and img_vp == nullptr)
+        throw InvalidParamException(
+            TRACE_INFO, "Invalid arguments: could not get valid input.");
+
     const cv::Mat& input =
-        img_np != nullptr ? img_np->image() : img_vp->image();
+        img_atm != nullptr ? img_atm->image() : img_vp->image();
     const int ksize = std::stoi(NumberNodeCast(arg2)->get_name());
 
     cv::Mat output;
