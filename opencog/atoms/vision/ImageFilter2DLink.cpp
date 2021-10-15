@@ -28,7 +28,8 @@ ImageFilter2DLink::ImageFilter2DLink(HandleSeq oset, Type t) :
 void ImageFilter2DLink::init() {
     Type tscope = get_type();
     if (not nameserver().isA(tscope, IMAGE_FILTER_TWO_D_LINK))
-        throw InvalidParamException(TRACE_INFO, "Expecting an ImageFilter2DLink.");
+        throw InvalidParamException(TRACE_INFO,
+                                    "Expecting an ImageFilter2DLink.");
 
     if (getOutgoingSet().size() != 3)
         throw InvalidParamException(TRACE_INFO,

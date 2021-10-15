@@ -10,8 +10,7 @@ processed.
 
 ## Status
 - It is possible to read an image from a file using `ImageNode`, its name corresponds to the image file location.
-- There is `ImageBlurLink` to apply `cv::blur` to images, it takes an `ImageNode` / `ImageValue` and a `NumberNode` (for kernel size).
-  - It returns an `ImageValue`.
+- There are a few OpenCV operations that you can invoke both on image Nodes and Values. They return `ImageValue`s. Look down for usage info in Scheme.
 - Saving images supported with `ImageWriteLink`.
 
 ## Building
@@ -40,6 +39,8 @@ For Scheme users:
 - `(Image "<file-path>")` opens an image from a given file.
 - `(ImageBlur <Image or ValueOf> (Number <kernel size>))` to setup a `cv::blur` operation.
 - `(ImageWrite <Image or ValueOf> <Concept or ValueOf>)` writes an image to a given location.
+- `(ImageHalfSize <Image or ValueOf>)` to setup a `cv::pyrDown` operation.
+- `(ImageFilter2D <Image or ValueOf> (Number <ddepth>) <Image or ValueOf>:kernel)` to setup a `cv::filter2D` operation.
 
 ## More plans and ideas
 Other required and optional `ImageFilterLink`s. These are described at https://docs.opencv.org/4.5.3/d4/d86/group__imgproc__filter.html
@@ -49,21 +50,15 @@ Other required and optional `ImageFilterLink`s. These are described at https://d
 
   + thresholding, convert to greyscale, convert to binary b/w.
 
-  + `filter2D()` to be wrapped in a `ImageFilter2DLink`.  The primary
-need for this is just to build up some simple Haar wavelets so
-that the learning algo can explore features.
-
   + `ImageRectangleLink` - this needs to be a white rectangle on a black
 background, with a given width, height, postion. To be used with the
-above to select regions.
+above to select regions (but `Rect` is a separate type in OpenCV that is used by other procedures for selecting ROI,
+is this necessary as a Link then?).
 
   + `HaarWaveletLink` - we want to search for features in a
 position-independent, scale-independent way. We need a good API for
 that. Not at all clear what a good API for that might be ... Really,
 we want something affine... Maybe this: http://wavelet2d.sourceforge.net/
-
-  + `pyrDown()` to be wrapped in `ImageHalfSizeLink` - just downscale the
-image to half its size.
 
   + `erode()` ... maybe useful later??
 
