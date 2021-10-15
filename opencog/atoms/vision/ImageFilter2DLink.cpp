@@ -1,12 +1,12 @@
 /*
- * opencog/atoms/vision/ImageBlurLink.cpp
+ * opencog/atoms/vision/ImageFilter2DLink.cpp
  *
  * Copyright (C) 2021 Adrian Borucki
  * All Rights Reserved
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-#include "ImageBlurLink.hpp"
+#include "ImageFilter2DLink.hpp"
 #include "ImageNode.hpp"
 #include "ImageValue.hpp"
 
@@ -20,22 +20,24 @@
 
 using namespace opencog;
 
-ImageBlurLink::ImageBlurLink(HandleSeq oset, Type t) :
+ImageFilter2DLink::ImageFilter2DLink(HandleSeq oset, Type t) :
     FunctionLink(std::move(oset), t) {
     init();
 }
 
-void ImageBlurLink::init() {
+void ImageFilter2DLink::init() {
     Type tscope = get_type();
-    if (not nameserver().isA(tscope, IMAGE_BLUR_LINK))
-        throw InvalidParamException(TRACE_INFO, "Expecting an ImageBlurLink.");
-
-    if (getOutgoingSet().size() != 2)
+    if (not nameserver().isA(tscope, IMAGE_FILTER_TWO_D_LINK))
         throw InvalidParamException(TRACE_INFO,
-                                    "Wrong number of arguments, expecting 2.");
+                                    "Expecting an ImageFilter2DLink.");
+
+    if (getOutgoingSet().size() != 3)
+        throw InvalidParamException(TRACE_INFO,
+                                    "Wrong number of arguments, expecting 3.");
 }
 
-ValuePtr ImageBlurLink::execute(AtomSpace* atomspace, bool silent) {
+ValuePtr ImageFilter2DLink::execute(AtomSpace* atomspace, bool silent) {
+    // -- type check --
     const Handle& arg1 = getOutgoingSet().at(0);
     Type arg1_type = arg1.const_atom_ptr()->get_type();
     if (not(nameserver().isA(arg1_type, IMAGE_NODE) or
@@ -51,6 +53,16 @@ ValuePtr ImageBlurLink::execute(AtomSpace* atomspace, bool silent) {
             TRACE_INFO,
             "Wrong argument type on position 2, expecting NumberNode.");
 
+    const Handle& arg3 = getOutgoingSet().at(2);
+    Type arg3_type = arg3.const_atom_ptr()->get_type();
+    if (not(nameserver().isA(arg3_type, IMAGE_NODE) or
+            nameserver().isA(arg3_type, VALUE_OF_LINK)))
+        throw InvalidParamException(TRACE_INFO,
+                                    "Wrong argument type on position 3, "
+                                    "expecting ImageNode or ValueOf.");
+
+    // -- argument processing --
+    // arg-1: input image
     ImageValuePtr img_vp = nullptr;
     auto img_atm = ImageNodeCast(arg1);
     auto img_vof = ValueOfLinkCast(arg1);
@@ -61,14 +73,26 @@ ValuePtr ImageBlurLink::execute(AtomSpace* atomspace, bool silent) {
         throw InvalidParamException(
             TRACE_INFO, "Invalid arguments: could not get valid input.");
 
+    // arg-3: kernel
+    ImageValuePtr kernel_vp = nullptr;
+    auto kernel_atm = ImageNodeCast(arg1);
+    auto kernel_vof = ValueOfLinkCast(arg1);
+    if (kernel_vof != nullptr)
+        kernel_vp = ImageValueCast(kernel_vof->execute(atomspace, silent));
+
+    if (kernel_atm == nullptr and kernel_vp == nullptr)
+        throw InvalidParamException(
+            TRACE_INFO, "Invalid arguments: could not get valid input.");
+
+    // -- procedure execution --
     const cv::Mat& input =
         img_atm != nullptr ? img_atm->image() : img_vp->image();
-    int ksize = std::stoi(NumberNodeCast(arg2)->get_name());
+    int ddepth = std::stoi(NumberNodeCast(arg2)->get_name());
 
     cv::Mat output;
-    cv::blur(input, output, cv::Size(ksize, ksize));
+    cv::filter2D(input, output, ddepth, kernel_vp->image());
 
     return createImageValue(output);
 }
 
-DEFINE_LINK_FACTORY(ImageBlurLink, IMAGE_BLUR_LINK)
+DEFINE_LINK_FACTORY(ImageFilter2DLink, IMAGE_FILTER_TWO_D_LINK)

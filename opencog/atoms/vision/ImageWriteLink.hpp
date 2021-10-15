@@ -6,8 +6,8 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-#ifndef _OPENCOG_IMAGE_BLUR_LINK_H
-#define _OPENCOG_IMAGE_BLUR_LINK_H
+#ifndef _OPENCOG_IMAGE_WRITE_LINK_H
+#define _OPENCOG_IMAGE_WRITE_LINK_H
 
 #include <opencog/atoms/core/FunctionLink.h>
 #include <opencog/atoms/vision/atom_types.h>
@@ -27,7 +27,7 @@ class ImageWriteLink : public FunctionLink {
     void init();
 
   public:
-    ImageWriteLink(HandleSeq, Type = IMAGE_BLUR_LINK);
+    ImageWriteLink(HandleSeq, Type = IMAGE_WRITE_LINK);
     ~ImageWriteLink() override = default;
 
     ImageWriteLink(const ImageWriteLink&) = delete;
