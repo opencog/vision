@@ -18,6 +18,7 @@ set(VISION_SOURCES
    ${SOURCES_DIR}/atoms/vision/ImageValue.cpp
    ${SOURCES_DIR}/atoms/vision/ImageBlurLink.cpp
    ${SOURCES_DIR}/atoms/vision/ImageWriteLink.cpp
+   ${SOURCES_DIR}/atoms/vision/ImageFilter2DLink.cpp
 )
 
 set(VISION_HEADERS
@@ -25,6 +26,7 @@ set(VISION_HEADERS
    ${SOURCES_DIR}/atoms/vision/ImageValue.hpp
    ${SOURCES_DIR}/atoms/vision/ImageBlurLink.hpp
    ${SOURCES_DIR}/atoms/vision/ImageWriteLink.hpp
+   ${SOURCES_DIR}/atoms/vision/ImageFilter2DLink.hpp
 )
 
 add_library(
