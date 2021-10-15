@@ -25,7 +25,7 @@ class ImageFilter2DLink : public FunctionLink {
     void init();
 
   public:
-    ImageFilter2DLink(HandleSeq, Type = IMAGE_FILTER_2D_LINK);
+    ImageFilter2DLink(HandleSeq, Type = IMAGE_FILTER_TWO_D_LINK);
     ~ImageFilter2DLink() override = default;
 
     ImageFilter2DLink(const ImageFilter2DLink&) = delete;
@@ -36,19 +36,19 @@ class ImageFilter2DLink : public FunctionLink {
     ValuePtr execute(AtomSpace*, bool = false) override;
 };
 
-using ImageBlurLinkPtr = std::shared_ptr<ImageFilter2DLink>;
+using ImageFilter2DLinkPtr = std::shared_ptr<ImageFilter2DLink>;
 
-static inline ImageBlurLinkPtr ImageBlurLinkCast(AtomPtr a) {
+static inline ImageFilter2DLinkPtr ImageFilter2DLinkCast(AtomPtr a) {
     return std::dynamic_pointer_cast<ImageFilter2DLink>(a);
 }
 
-static inline ImageBlurLinkPtr ImageBlurLinkCast(const Handle& h) {
+static inline ImageFilter2DLinkPtr ImageFilter2DLinkCast(const Handle& h) {
     AtomPtr a(h);
     return std::dynamic_pointer_cast<ImageFilter2DLink>(a);
 }
 
 template <typename... Args>
-static constexpr auto createImageBlurLink(Args&&... args) {
+static constexpr auto createImageFilter2DLink(Args&&... args) {
     return std::make_shared<ImageFilter2DLink>(args...);
 }
 

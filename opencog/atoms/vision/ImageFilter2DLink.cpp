@@ -27,7 +27,7 @@ ImageFilter2DLink::ImageFilter2DLink(HandleSeq oset, Type t) :
 
 void ImageFilter2DLink::init() {
     Type tscope = get_type();
-    if (not nameserver().isA(tscope, IMAGE_FILTER_2D_LINK))
+    if (not nameserver().isA(tscope, IMAGE_FILTER_TWO_D_LINK))
         throw InvalidParamException(TRACE_INFO, "Expecting an ImageFilter2DLink.");
 
     if (getOutgoingSet().size() != 3)
@@ -94,4 +94,4 @@ ValuePtr ImageFilter2DLink::execute(AtomSpace* atomspace, bool silent) {
     return createImageValue(output);
 }
 
-DEFINE_LINK_FACTORY(ImageFilter2DLink, IMAGE_FILTER_2D_LINK)
+DEFINE_LINK_FACTORY(ImageFilter2DLink, IMAGE_FILTER_TWO_D_LINK)
