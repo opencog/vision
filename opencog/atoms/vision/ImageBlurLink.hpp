@@ -33,7 +33,8 @@ class ImageBlurLink : public FunctionLink {
 
     static Handle factory(const Handle&);
 
-    ValuePtr execute(AtomSpace*, bool = false) override;
+    virtual bool is_executable() const { return true; }
+    virtual ValuePtr execute(AtomSpace*, bool = false);
 };
 
 using ImageBlurLinkPtr = std::shared_ptr<ImageBlurLink>;
