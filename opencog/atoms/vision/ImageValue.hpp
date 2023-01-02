@@ -33,6 +33,8 @@ class ImageValue : public Value {
     ImageValue(cv::Mat image);
     ~ImageValue() override = default;
 
+    virtual ValuePtr value_at_index(size_t) const { return nullptr; }
+
     bool operator==(const Value& other) const override;
 
     std::string to_string(const std::string& indent = "") const override;
