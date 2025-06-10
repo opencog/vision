@@ -4,7 +4,7 @@
 ; blur_and_write.scm
 ;
 ; An example of loading an image, applying a blur filter on it,
-; and storing the result in a file
+; and storing the result in a file.
 ;
 (use-modules (opencog) (opencog exec) (opencog vision))
 
