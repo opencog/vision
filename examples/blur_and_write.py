@@ -8,6 +8,7 @@ and storing the result in a file.
 
 from opencog.atomspace import *
 from opencog.type_constructors import *
+from opencog.vision import *
 
 # Create an AtomSpace and set it as default
 set_default_atomspace(AtomSpace())

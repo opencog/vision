@@ -16,6 +16,30 @@ add_dependencies(vision_types vision_atom_types)
 target_include_directories(vision_types PRIVATE ${CMAKE_BINARY_DIR})
 target_link_libraries(vision_types PUBLIC ${ATOMSPACE_LIBRARIES})
 
+# == Python types ==
+IF (HAVE_CYTHON)
+	SET(CYTHON_FLAGS "-3" "-f" "-Wextra")
+	INCLUDE_DIRECTORIES(${Python3_INCLUDE_DIRS})
+	CYTHON_ADD_MODULE_PYX(vision "vision_types.pyx")
+	ADD_LIBRARY(vision_cython SHARED vision.cpp)
+	ADD_DEPENDENCIES(vision_cython vision_types)
+
+	TARGET_LINK_LIBRARIES(vision_cython
+		# ${NO_AS_NEEDED}
+		vision_types
+		${ATOMSPACE_LIBRARIES}
+		${Python3_LIBRARIES}
+	)
+
+	SET_TARGET_PROPERTIES(vision_cython PROPERTIES
+		PREFIX ""
+		OUTPUT_NAME vision)
+
+	INSTALL(TARGETS
+		vision_cython
+		DESTINATION "${PYTHON_DEST}")
+ENDIF (HAVE_CYTHON)
+
 # == The Library ==
 set(VISION_SOURCES
    ${SOURCES_DIR}/atoms/vision/ImageNode.cpp
