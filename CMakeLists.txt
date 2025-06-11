@@ -78,7 +78,7 @@ endif (NOT Catch2_FOUND)
 # Guile Python and Cython
 
 include(OpenCogFindGuile)
-# include(OpenCogFindPython)
+include(OpenCogFindPython)
 
 # ----------------------------------------------------------
 # Optional, currently needed only to hush up DRD in util/Logger.cc
@@ -109,7 +109,7 @@ endif (NOT DEFINED ATOMSPACE_DATA_DIR)
 
 include("${ATOMSPACE_DATA_DIR}/cmake/OpenCogMacros.cmake")
 include("${ATOMSPACE_DATA_DIR}/cmake/OpenCogGuile.cmake")
-# include("${ATOMSPACE_DATA_DIR}/cmake/OpenCogCython.cmake")
+include("${ATOMSPACE_DATA_DIR}/cmake/OpenCogCython.cmake")
 
 # ==========================================================
 # Decide what to build, based on the packages found.
