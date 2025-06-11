@@ -29,6 +29,7 @@ IF (HAVE_CYTHON)
 	# the types.)
 	TARGET_LINK_LIBRARIES(vision_cython
 		${NO_AS_NEEDED}
+		vision
 		vision_types
 		${ATOMSPACE_LIBRARIES}
 		${Python3_LIBRARIES}
