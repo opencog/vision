@@ -28,8 +28,10 @@ result = img_blur.execute()
 img_collection.set_value(key_1, result)
 
 # Setup an ImageWriteLink with the image to be loaded from
-# img_collection key_1 and stored in example_output.png
-img_write = ImageWriteLink(ValueOfLink(img_collection, key_1), ConceptNode("example_output.png"))
+# img_collection key_1 and stored in example_output_py.png
+img_write = ImageWriteLink(
+	ValueOfLink(img_collection, key_1),
+	ConceptNode("example_output_py.png"))
 img_write.execute()
 
-print("Image processed successfully. Output saved to example_output.png")
+print("Image processed successfully. Output saved to example_output_py.png")
