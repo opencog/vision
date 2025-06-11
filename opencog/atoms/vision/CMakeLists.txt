@@ -20,12 +20,15 @@ target_link_libraries(vision_types PUBLIC ${ATOMSPACE_LIBRARIES})
 IF (HAVE_CYTHON)
 	SET(CYTHON_FLAGS "-3" "-f" "-Wextra")
 	INCLUDE_DIRECTORIES(${Python3_INCLUDE_DIRS})
-	CYTHON_ADD_MODULE_PYX(vision "vision_types.pyx")
+	CYTHON_ADD_MODULE_PYX(vision "vision.pyx" "vision_types.pyx")
 	ADD_LIBRARY(vision_cython SHARED vision.cpp)
 	ADD_DEPENDENCIES(vision_cython vision_types)
 
+	# MUST set --no-as-needed, otherwise, the shared lib that
+	# initializes the types will fail to load (and initialize
+	# the types.)
 	TARGET_LINK_LIBRARIES(vision_cython
-		# ${NO_AS_NEEDED}
+		${NO_AS_NEEDED}
 		vision_types
 		${ATOMSPACE_LIBRARIES}
 		${Python3_LIBRARIES}
